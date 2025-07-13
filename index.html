@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Medicina UC</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin: 2rem auto;
+      max-width: 1200px;
+    }
+    .curso {
+      background: #ffffff;
+      border: 2px solid #ccc;
+      padding: 0.5rem;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .curso:hover {
+      border-color: #333;
+    }
+    .curso.aprobado {
+      background: #c6f6c6;
+      text-decoration: line-through;
+      border-color: #4caf50;
+    }
+    .curso.bloqueado {
+      background: #eee;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+    .semestre-label {
+      grid-column: span 7;
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Medicina UC</h1>
+  <div id="malla" class="grid"></div>
+
+  <script>
+    const cursos = [
+      {
+        sigla: "MED107A",
+        nombre: "Bases y Fundamentos de la Medicina I",
+        creditos: 10,
+        semestre: "I",
+        prerequisitos: []
+      },
+      {
+        sigla: "MED108A",
+        nombre: "Bases y Fundamentos de la Medicina II",
+        creditos: 10,
+        semestre: "II",
+        prerequisitos: ["MED107A"]
+      },
+      {
+        sigla: "MED111A",
+        nombre: "Morfología I",
+        creditos: 5,
+        semestre: "II",
+        prerequisitos: ["MED107A"]
+      },
+      {
+        sigla: "MED212A",
+        nombre: "Morfología II",
+        creditos: 15,
+        semestre: "III",
+        prerequisitos: ["MED111A"]
+      },
+      {
+        sigla: "MED213A",
+        nombre: "Morfología III",
+        creditos: 15,
+        semestre: "IV",
+        prerequisitos: ["MED212A"]
+      }
+    ];
+
+    const estado = JSON.parse(localStorage.getItem("estadoCursos") || "{}");
+
+    function renderMalla() {
+      const malla = document.getElementById("malla");
+      malla.innerHTML = "";
+
+      const semestresOrden = [...new Set(cursos.map(c => c.semestre))];
+
+      semestresOrden.forEach(sem => {
+        const label = document.createElement("div");
+        label.className = "semestre-label";
+        label.textContent = `Semestre ${sem}`;
+        malla.appendChild(label);
+
+        cursos.filter(c => c.semestre === sem).forEach(curso => {
+          const aprobado = estado[curso.sigla];
+          const desbloqueado = curso.prerequisitos.every(p => estado[p]);
+
+          const div = document.createElement("div");
+          div.className = "curso";
+          if (aprobado) div.classList.add("aprobado");
+          else if (!desbloqueado) div.classList.add("bloqueado");
+
+          div.innerHTML = `<strong>${curso.sigla}</strong><br>${curso.nombre}<br><small>${curso.creditos} cr.</small>`;
+          if (desbloqueado) {
+            div.onclick = () => {
+              estado[curso.sigla] = !estado[curso.sigla];
+              localStorage.setItem("estadoCursos", JSON.stringify(estado));
+              renderMalla();
+            };
+          }
+
+          malla.appendChild(div);
+        });
+      });
+    }
+
+    renderMalla();
+  </script>
+</body>
+</html>
