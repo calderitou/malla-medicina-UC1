@@ -1,63 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
 body {
-  font-family: sans-serif;
+  font-family: 'Quicksand', sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  background: #fff0f5;
+  color: #333;
 }
 
 h1 {
   text-align: center;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem;
+  font-size: 2rem;
+  color: #d63384;
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  padding: 1rem;
+  gap: 15px;
+  padding: 2rem;
 }
 
 .course {
-  padding: 10px;
-  border-radius: 10px;
-  width: 180px;
+  padding: 12px;
+  border-radius: 16px;
+  width: 200px;
   text-align: center;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-size: 0.9rem;
+}
+
+.course:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .locked {
-  background: #ccc;
-  color: #444;
-  border: 2px solid #999;
+  background: #f8d7da;
+  color: #842029;
+  border: 2px solid #f5c2c7;
 }
 
 .available {
-  background: #ffec99;
-  color: #000;
-  border: 2px solid #f1c40f;
+  background: #fff3cd;
+  color: #664d03;
+  border: 2px solid #ffeeba;
 }
 
 .done {
-  background: #b6f7c1;
-  color: #000;
-  border: 2px solid #2ecc71;
+  background: #d1e7dd;
+  color: #0f5132;
+  border: 2px solid #badbcc;
 }
 
 .semester-title {
   width: 100%;
   font-weight: bold;
-  font-size: 1.2rem;
-  margin-top: 1rem;
+  font-size: 1.3rem;
+  color: #d63384;
+  margin-top: 2rem;
+  text-align: center;
 }
 
 .btn-reset {
-  margin: 1rem auto;
+  margin: 0 auto 2rem;
   display: block;
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
-  background: #e74c3c;
+  background: #d63384;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-reset:hover {
+  background: #c91865;
 }
