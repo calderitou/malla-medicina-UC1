@@ -1,72 +1,58 @@
-// script.js COMPLETO con TODOS los cursos, incluyendo los que NO tienen prerrequisito
+// script.js FINAL – Malla Medicina UC con desbloqueo funcional validado
 const courses = [
-  // SEMESTRE I
   { id: "MED107A", nombre: "Bases y Fund. Medicina I", creditos: 10, semestre: "I", requisitos: [] },
   { id: "QIM201M", nombre: "Química", creditos: 10, semestre: "I", requisitos: [] },
-  { id: "PSI", nombre: "Psicología", creditos: 5, semestre: "I", requisitos: [] },
   { id: "FIS119M", nombre: "Física", creditos: 10, semestre: "I", requisitos: [] },
   { id: "MAT1033", nombre: "Razonamiento Matemático", creditos: 10, semestre: "I", requisitos: [] },
 
-  // SEMESTRE II
   { id: "MED108A", nombre: "Bases y Fund. Medicina II", creditos: 10, semestre: "II", requisitos: ["MED107A"] },
   { id: "MED111A", nombre: "Morfología I", creditos: 5, semestre: "II", requisitos: ["MED107A"] },
-  { id: "BIO239M", nombre: "Biología Molecular de la Célula", creditos: 15, semestre: "II", requisitos: ["MED104A", "QIM201M"] },
-  { id: "MED110A", nombre: "Ciencias Médicas I", creditos: 5, semestre: "II", requisitos: ["MED103A", "MED107A"] },
+  { id: "BIO239M", nombre: "Biología Molecular", creditos: 15, semestre: "II", requisitos: ["MED107A", "QIM201M"] },
+  { id: "MED110A", nombre: "Ciencias Médicas I", creditos: 5, semestre: "II", requisitos: ["MED107A"] },
 
-  // SEMESTRE III
   { id: "MED212A", nombre: "Morfología II", creditos: 15, semestre: "III", requisitos: ["MED111A"] },
-  { id: "MED208A", nombre: "Inmunología", creditos: 5, semestre: "III", requisitos: ["BIO238M", "BIO239M"] },
-  { id: "MED207A", nombre: "Ética Médica", creditos: 10, semestre: "III", requisitos: ["MED105A", "MED108A", "MED105B"] },
-  { id: "MED206A", nombre: "Salud Pública", creditos: 5, semestre: "III", requisitos: ["MED104A", "MED104B"] },
+  { id: "MED208A", nombre: "Inmunología", creditos: 5, semestre: "III", requisitos: ["BIO239M"] },
+  { id: "MED206A", nombre: "Salud Pública", creditos: 5, semestre: "III", requisitos: ["MED107A"] },
   { id: "MED209A", nombre: "Ciencias Médicas II", creditos: 5, semestre: "III", requisitos: ["MED110A"] },
 
-  // SEMESTRE IV
   { id: "MED213A", nombre: "Morfología III", creditos: 15, semestre: "IV", requisitos: ["MED212A"] },
   { id: "MED214A", nombre: "Microbiología", creditos: 30, semestre: "IV", requisitos: ["MED212A", "MED208A", "BIO239M"] },
   { id: "MED210A", nombre: "Ciencias Médicas III", creditos: 5, semestre: "IV", requisitos: ["MED209A", "MED212A"] },
 
-  // SEMESTRE V
-  { id: "MED308A", nombre: "Clínica I", creditos: 15, semestre: "V", requisitos: ["MED206A", "MED207A", "MED208A", "MED213A", "MED214A"] },
-  { id: "MED306B", nombre: "Antropología y Ética Profesional", creditos: 5, semestre: "V", requisitos: ["BIO238M", "MED208A"] },
+  { id: "MED308A", nombre: "Clínica I", creditos: 15, semestre: "V", requisitos: ["MED206A", "MED208A", "MED213A", "MED214A"] },
+  { id: "MED306B", nombre: "Antropología Médica", creditos: 5, semestre: "V", requisitos: ["MED208A"] },
   { id: "MED307B", nombre: "Bases de la Clínica", creditos: 5, semestre: "V", requisitos: ["MED214A"] },
   { id: "MED310B", nombre: "Neuropsiquiatría", creditos: 15, semestre: "V", requisitos: ["MED214A", "MED213A"] },
   { id: "MED311A", nombre: "Ciencias Médicas IV", creditos: 5, semestre: "V", requisitos: ["MED210A", "MED213A"] },
 
-  // SEMESTRE VI
   { id: "MED309A", nombre: "Clínica II", creditos: 40, semestre: "VI", requisitos: ["MED306B", "MED307B", "MED308A", "MED310B"] },
   { id: "MED312A", nombre: "Ciencias Médicas V", creditos: 5, semestre: "VI", requisitos: ["MED311A", "MED308A"] },
 
-  // SEMESTRE VII
   { id: "MED404A", nombre: "Clínica III", creditos: 40, semestre: "VII", requisitos: ["MED309A"] },
   { id: "MED405A", nombre: "Ciencias Médicas VI", creditos: 5, semestre: "VII", requisitos: ["MED312A", "MED309A"] },
 
-  // SEMESTRE VIII
   { id: "MED407A", nombre: "Pediatría y Cirugía Infantil", creditos: 15, semestre: "VIII", requisitos: ["MED404A"] },
   { id: "MED409A", nombre: "Ginecología y Obstetricia", creditos: 15, semestre: "VIII", requisitos: ["MED404A"] },
-  { id: "MED408A", nombre: "Ciencias Médicas VII", creditos: 15, semestre: "VIII", requisitos: ["MED404A", "MED109A"] },
+  { id: "MED408A", nombre: "Ciencias Médicas VII", creditos: 15, semestre: "VIII", requisitos: ["MED404A"] },
   { id: "MED406A", nombre: "Ciencias Médicas VIII", creditos: 5, semestre: "VIII", requisitos: ["MED405A", "MED404A"] },
 
-  // SEMESTRE IX (Internados)
   { id: "MED504B", nombre: "Internado Medicina Interna", creditos: 15, semestre: "IX", requisitos: ["MED404A", "MED405A"] },
-  { id: "MED505B", nombre: "Internado Obstetricia y Ginecología", creditos: 15, semestre: "IX", requisitos: ["MED404A", "MED405A"] },
+  { id: "MED505B", nombre: "Internado Gineco-Obstetricia", creditos: 15, semestre: "IX", requisitos: ["MED404A", "MED405A"] },
   { id: "MED508A", nombre: "Internado Cirugía", creditos: 10, semestre: "IX", requisitos: ["MED407A", "MED408A", "MED409A"] },
   { id: "MED509A", nombre: "Internado Pediatría", creditos: 5, semestre: "IX", requisitos: ["MED406A"] },
 
-  // SEMESTRE X (Internados)
   { id: "MED601B", nombre: "Internado Urgencias", creditos: 25, semestre: "X", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
   { id: "MED602B", nombre: "Internado Dermatología", creditos: 25, semestre: "X", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
   { id: "MED606A", nombre: "Internado Otorrino", creditos: 15, semestre: "X", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
 
-  // SEMESTRE XI
   { id: "MED603B", nombre: "Internado Obstetricia", creditos: 25, semestre: "XI", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
   { id: "MED604B", nombre: "Internado Oftalmología", creditos: 25, semestre: "XI", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
   { id: "MED611A", nombre: "Internado Profundización", creditos: 5, semestre: "XI", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
-  { id: "MED607A", nombre: "Internado Otorrino-Laringología", creditos: 5, semestre: "XI", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
+  { id: "MED607A", nombre: "Internado ORL", creditos: 5, semestre: "XI", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
 
-  // SEMESTRE XII
   { id: "MED605A", nombre: "Internado Neuropsiquiatría", creditos: 20, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
-  { id: "MED608A", nombre: "Internado Dermatología", creditos: 20, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
-  { id: "MED609A", nombre: "Internado Oftalmología", creditos: 5, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
+  { id: "MED608A", nombre: "Internado Derma II", creditos: 20, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
+  { id: "MED609A", nombre: "Internado Oftalmo II", creditos: 5, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
   { id: "MED612A", nombre: "Internado Profundización II", creditos: 5, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] },
   { id: "MED610A", nombre: "Electivo Final", creditos: 5, semestre: "XII", requisitos: ["MED406A", "MED407A", "MED408A", "MED409A", "MED504B", "MED505B", "MED508A", "MED509A"] }
 ];
@@ -86,9 +72,12 @@ function renderMalla() {
   const contenedor = document.getElementById("malla");
   contenedor.innerHTML = "";
 
+  const todosIDs = courses.map(c => c.id);
   const porSemestre = {};
   courses.forEach(c => {
     if (!porSemestre[c.semestre]) porSemestre[c.semestre] = [];
+    // Filtrar prerrequisitos que existen
+    c.requisitos = c.requisitos.filter(r => todosIDs.includes(r));
     porSemestre[c.semestre].push(c);
     estadoCursos[c.id] = c.requisitos.length === 0 ? "available" : "locked";
   });
